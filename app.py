@@ -6,9 +6,19 @@ import pickle
 from nltk.stem import WordNetLemmatizer
 import re
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+import nltk
 
 
 st.set_page_config(page_title="Fake News Classifier", layout="centered")
+
+
+
+@st.cache_resource
+def load_nltk_resources():
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
+
+load_nltk_resources()
 
 
 MODEL_PATH = "m2.h5"
@@ -116,6 +126,7 @@ if st.button("Submit"):
             """,
             unsafe_allow_html=True
         )
+
 
 
 
