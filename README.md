@@ -11,7 +11,19 @@
   <b>Deep Learning based NLP system to detect Fake News related to the United States 🇺🇸</b>
 </p>
 
+
+
 ---
+
+## 🌐 Live Application
+
+🚀 The Fake News Detection System is deployed and accessible online.
+
+🔗 **Live App Link:**  
+👉 (https://fakenews-nbenckct3ukauqlhmfuejx.streamlit.app/)
+
+---
+
 
 ## 📌 Project Overview
 
