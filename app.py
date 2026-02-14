@@ -5,24 +5,33 @@ from nltk.stem import WordNetLemmatizer
 import re
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# -------------------- PAGE CONFIG --------------------
+
 st.set_page_config(page_title="Fake News Classifier", layout="centered")
 
-# -------------------- CACHE MODEL & TOKENIZER --------------------
+def load_trained_model():
+    if not os.path.exists(MODEL_PATH):
+        with st.spinner("Downloading trained model..."):
+            gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+    return load_model(MODEL_PATH)
+
+trained_model = load_trained_model()
+
+
+
 @st.cache_resource
 def load_model_and_tokenizer():
-    model = load_model("../model/m2.h5")
-    with open("../Notebooks/tokenizer.pkl", "rb") as file:
+    model=trained_model
+    with open("tokenizer.pkl", "rb") as file:
         tokenizer = pickle.load(file)
     return model, tokenizer
 
 with st.spinner("Loading AI model... 🤖"):
     model, t_N = load_model_and_tokenizer()
 
-# -------------------- NLP OBJECT (LIGHT, NO CACHE NEEDED) --------------------
+
 lemmatizer = WordNetLemmatizer()
 
-# -------------------- PREPROCESSOR --------------------
+
 @st.cache_data
 def preprocessor(input_text):
     words = re.sub('[^a-zA-Z]', ' ', input_text.lower())
@@ -34,7 +43,7 @@ def preprocessor(input_text):
     pad_seq = pad_sequences(seq, maxlen=800)
     return pad_seq
 
-# -------------------- ANIMATED TITLE --------------------
+
 animated_title = """
 <style>
 @keyframes fadeSlide {
@@ -58,7 +67,7 @@ animated_title = """
 """
 st.markdown(animated_title, unsafe_allow_html=True)
 
-# -------------------- BACKGROUND IMAGE --------------------
+
 page_element = """
 <style>
 [data-testid="stAppViewContainer"] {
@@ -70,14 +79,14 @@ page_element = """
 """
 st.markdown(page_element, unsafe_allow_html=True)
 
-# -------------------- INPUT --------------------
+
 news = st.text_area(
     label="News",
     placeholder="Enter the news article here...",
     height=250
 )
 
-# -------------------- PREDICTION --------------------
+
 if st.button("Submit"):
     if news.strip() == "":
         st.warning("⚠️ Please enter some news text")
@@ -102,3 +111,4 @@ if st.button("Submit"):
             """,
             unsafe_allow_html=True
         )
+
