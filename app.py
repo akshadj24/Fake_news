@@ -11,7 +11,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 st.set_page_config(page_title="Fake News Classifier", layout="centered")
 
 
-MODEL_PATH = "model.h5"
+MODEL_PATH = "m2.h5"
 MODEL_URL = "https://drive.google.com/uc?id=1gKuy9T0Vo6TpD6lGjox4u-jZU2pWoBa9"
 def load_trained_model():
     if not os.path.exists(MODEL_PATH):
@@ -116,6 +116,7 @@ if st.button("Submit"):
             """,
             unsafe_allow_html=True
         )
+
 
 
 
